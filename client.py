@@ -21,7 +21,7 @@ def main():
   if len(sys.argv) != 2:
     usage()
   
-  key = sys.argv[1]
+  key = int(sys.argv[1])
 
   while (True):
     # Create a client socket to interact with server
