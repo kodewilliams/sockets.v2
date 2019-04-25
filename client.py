@@ -5,17 +5,18 @@ import sys
 import time
 
 
-# HOSTS = {
-#   1: 'fdce:1d24:321:0:e5fa:2e62:9a5a:9984',
-#   2: 'fdce:1d24:321:0:d480:12f9:3c23:3e3f',
-#   3: '::'
-# }
+ HOSTS = {
+   1: 'fdce:1d24:321:0:e5fa:2e62:9a5a:9984',
+   2: 'fdce:1d24:321:0:d480:12f9:3c23:3e3f',
+   3: '::'
+ }
 
-HOSTS = {
-  1: '::',
-  2: '::',
-  3: '::'
-}
+# For testing purposes
+# HOSTS = {
+#  1: '::',
+#  2: '::',
+#  3: '::'
+#}
 
 def usage():
   print("Usage: python client.py <device number>")
