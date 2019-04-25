@@ -14,14 +14,14 @@ def create_server(port):
   s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
   s.bind(socket_addr)
   s.listen()
-  print(f"Server initialized and running on port {port}")
+  print("Server initialized and running on port %d" % port)
   print(socket_addr)
   return s
 
 # Returns a usable connection to a client that is accessing the server.
 def connect_server(s):
   connection, (addr, port) = s.accept()
-  print(f"Received connection from: {addr}:{port}")
+  print("Received connection from: %d:%d" % addr, port)
   return connection, addr, port
 
 # Executes command on server and/or proxy based on mode
