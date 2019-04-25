@@ -1,8 +1,7 @@
 import socket
 
-BUFFER = 256
+BUFFER = 1024
 SERVER_PORT = 7777
-PROXY_PORT = 8888
 
 # Returns a server socket created at a given host and port.
 def create_server(port):
@@ -10,12 +9,13 @@ def create_server(port):
   host = '::'
   info = socket.getaddrinfo(host, port, socket.AF_UNSPEC, socket.SOCK_STREAM, 0, socket.AI_PASSIVE)
   # Extract socket information (addr family, socket type, protocol)
-  af, socktype, protocol, canonname, socket_addr = info
-  # INitialize socket
-  s = socket.socket(af, socktype, protocol)
+  af, socktype, protocol, canonname, socket_addr = info[0]
+  # Initialize socket
+  s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
   s.bind(socket_addr)
   s.listen()
-  print(f"Server initialized and running at {socket_addr[0]}:{socket_addr[1]}")
+  print(f"Server initialized and running on port {port}")
+  print(socket_addr)
   return s
 
 # Returns a usable connection to a client that is accessing the server.
