@@ -2,6 +2,7 @@
 import socket
 import library
 import sys
+import time
 
 CLIENT_PORT = 9000
 SERVER_PORT = 7777
@@ -35,6 +36,8 @@ def main():
     client_socket.connect((HOSTS[key], SERVER_PORT))
     filepath = input('Filepath: ')
     filename = input('Save as: ')
+    # Store the time when the request was sent
+    send_time = time.time()
     # Send filepath to server through client socket
     client_socket.send(filepath.encode())
 
@@ -50,15 +53,17 @@ def main():
         f.write(data)
         data = client_socket.recv(BUFFER)
         if not data:
+          receive_time = time.time()
           break
 
     # Cleanup and close
     print('File successfully saved as %s' % filename)
+    print('Round Trip Time (RTT): %d' % receive_time - send_time)
     client_socket.close()
 
     # Prompt for reentry
     while True:
-      decision = input('Continue? [y/n]')
+      decision = input('Continue? [y/n] > ')
       if decision == 'y':
         break
       if decision == 'n':
