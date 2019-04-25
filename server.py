@@ -4,15 +4,12 @@ import library
 import threading
 from _thread import *
 
-BUFFER = 1024
-SERVER_PORT = 7777
-
 server_lock = threading.Lock()
 
 # Process command in a separate spawned thread
 def server_thread(connection):
   # Get the path of the file in the client request
-  data = connection.recv(BUFFER)
+  data = connection.recv(library.BUFFER)
   # Close the thread
   if not data:
     print('Error processing command')
@@ -30,7 +27,7 @@ def server_thread(connection):
 
 def main():
   # Spin up the server
-  s = library.create_server(SERVER_PORT)
+  s = library.create_server(library.SERVER_PORT)
   
   # Indefinitely process client requests
   while True:

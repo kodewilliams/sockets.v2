@@ -3,6 +3,7 @@ import socket
 BUFFER = 1024
 SERVER_PORT = 7777
 
+
 # Returns a server socket created at a given host and port.
 def create_server(port):
   # Get the ipv6 information for port
@@ -28,7 +29,8 @@ def connect_server(s):
 def process_command(filepath, connection):
   # Fetch file and return
   try:
-    with open(filepath.decode().strip(),'rb') as f:
+    filepath = filepath.decode().strip()
+    with open(filepath, 'rb') as f:
       # Send file in buffer sized portions
       l = f.read(BUFFER)
       while (l):
@@ -41,4 +43,3 @@ def process_command(filepath, connection):
     return b'File not found.\n'
   except:
     return b'Error processing request.\n'
-    
