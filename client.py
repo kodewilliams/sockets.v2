@@ -8,17 +8,17 @@ CLIENT_PORT = 9000
 SERVER_PORT = 7777
 BUFFER = 1024
 
-HOSTS = {
-  1: 'fdce:1d24:321:0:e5fa:2e62:9a5a:9984',
-  2: 'fdce:1d24:321:0:d480:12f9:3c23:3e3f',
-  3: '::'
-}
-
 # HOSTS = {
-#   1: '::',
-#   2: '::',
+#   1: 'fdce:1d24:321:0:e5fa:2e62:9a5a:9984',
+#   2: 'fdce:1d24:321:0:d480:12f9:3c23:3e3f',
 #   3: '::'
 # }
+
+HOSTS = {
+  1: '::',
+  2: '::',
+  3: '::'
+}
 
 def usage():
   print("Usage: python client.py <device number>")
@@ -58,7 +58,10 @@ def main():
 
     # Cleanup and close
     print('File successfully saved as %s' % filename)
-    print('Round Trip Time (RTT): %d' % receive_time - send_time)
+
+    # Calculate RTT
+    rtt = receive_time - send_time
+    print('Round Trip Time (RTT):', rtt)
     client_socket.close()
 
     # Prompt for reentry
