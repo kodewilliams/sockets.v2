@@ -10,7 +10,7 @@ def create_server(port):
   info = socket.getaddrinfo(host, port, socket.AF_UNSPEC, socket.SOCK_STREAM, 0, socket.AI_PASSIVE)
   # Extract socket information (addr family, socket type, protocol)
   af, socktype, protocol, canonname, socket_addr = info[0]
-  # Initialize socket
+  # Initialize socket and bind to port
   s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
   s.bind(socket_addr)
   s.listen()
@@ -20,18 +20,25 @@ def create_server(port):
 
 # Returns a usable connection to a client that is accessing the server.
 def connect_server(s):
-  connection, (addr, port) = s.accept()
-  print("Received connection from: %d:%d" % addr, port)
-  return connection, addr, port
+  connection, addr = s.accept()
+  print("Received connection from client at %s on port %s" % (addr[0], addr[1]))
+  return connection, addr
 
 # Executes command on server and/or proxy based on mode
 def process_command(filepath, connection):
   # Fetch file and return
-  f = open(filepath ,'rb')
-  # Send file through segments
-  segment = f.read(BUFFER)
-  while (segment):
-    connection.send(segment)
-    segment = f.read(BUFFER)
-  # Clean up file pointer
-  f.close()
+  try:
+    with open(filepath.decode().strip(),'rb') as f:
+      # Send file in buffer sized portions
+      l = f.read(BUFFER)
+      while (l):
+        connection.send(l)
+        # Output data sent on iteration
+        l = f.read(BUFFER)
+      # Alert client that file transfer is done
+      return b'File sent.\n'
+  except FileNotFoundError:
+    return b'File not found.\n'
+  except:
+    return b'Error processing request.\n'
+    
