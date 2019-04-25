@@ -4,9 +4,6 @@ import library
 import sys
 import time
 
-CLIENT_PORT = 9000
-SERVER_PORT = 7777
-BUFFER = 1024
 
 # HOSTS = {
 #   1: 'fdce:1d24:321:0:e5fa:2e62:9a5a:9984',
@@ -33,28 +30,31 @@ def main():
   while (True):
     # Create a client socket to interact with server
     client_socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-    client_socket.connect((HOSTS[key], SERVER_PORT))
+    client_socket.connect((HOSTS[key], library.SERVER_PORT))
     filepath = input('Filepath: ')
-    filename = input('Save as: ')
+    filename = input('Save as: ').strip()
     # Store the time when the request was sent
     send_time = time.time()
     # Send filepath to server through client socket
     client_socket.send(filepath.encode())
 
     # Write data being received to file
-    with open(filename.strip(), 'wb') as f:
+    with open(filename, 'wb') as f:
       # Capture data while server is still sending it
-      data = client_socket.recv(BUFFER)
-      if (data == 'Error processing command'):
+      data = client_socket.recv(library.BUFFER)
+      if 'Error' in data.split():
         print('Error retrieving data')
         break
       while (data):
         print('Receiving data...')
         f.write(data)
-        data = client_socket.recv(BUFFER)
+        data = client_socket.recv(library.BUFFER)
         if not data:
           receive_time = time.time()
           break
+    
+    # Calculate RTT
+    rtt = receive_time - send_time
 
     # Cleanup and close
     print('File successfully saved as %s' % filename)
