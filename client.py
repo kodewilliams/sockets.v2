@@ -36,6 +36,9 @@ def main():
     with open(filename.strip(), 'wb') as f:
       # Capture data while server is still sending it
       data = client_socket.recv(BUFFER)
+      if (data == 'Error processing command'):
+        print('Error retrieving data')
+        break
       while (data):
         print('Receiving data...')
         f.write(data)
@@ -46,6 +49,15 @@ def main():
     # Cleanup and close
     print('File successfully saved as %s' % filename)
     client_socket.close()
+
+    # Prompt for reentry
+    while True:
+      decision = input('Continue? [y/n]')
+      if decision == 'y':
+        break
+      if decision == 'n':
+        return
+      else: continue
 
 # Run code
 main()

@@ -15,7 +15,7 @@ def server_thread(connection):
   data = connection.recv(BUFFER)
   # Close the thread
   if not data:
-    print('Empty command from client')
+    print('Error processing command')
     connection.sendall(b'Error processing command')
     server_lock.release()
     return
