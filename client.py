@@ -13,14 +13,11 @@ HOSTS = {
   3: '::'
 }
 
-
 # HOSTS = {
 #   1: '::',
 #   2: '::',
 #   3: '::'
 # }
-  
-
 
 def usage():
   print("Usage: python client.py <device number>")
