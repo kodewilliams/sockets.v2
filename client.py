@@ -63,7 +63,7 @@ def main():
 
     # Prompt for reentry
     while True:
-      decision = input('Continue? [y/n] > ')
+      decision = input('Continue? [y/n] > ').lower()
       if decision == 'y':
         break
       if decision == 'n':
