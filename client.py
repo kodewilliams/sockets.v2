@@ -8,7 +8,7 @@ import time
  HOSTS = {
    1: 'fdce:1d24:321:0:e5fa:2e62:9a5a:9984',
    2: 'fdce:1d24:321:0:d480:12f9:3c23:3e3f',
-   3: '::'
+   3: 'fdce:1d24:321:0:a6d8:82ac:e854:f3d1'
  }
 
 # For testing purposes
