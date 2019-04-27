@@ -38,7 +38,7 @@ def process_command(filepath, connection):
         # Output data sent on iteration
         l = f.read(BUFFER)
       # Alert client that file transfer is done
-      return b'File sent.\n'
+      print('File sent')
   except FileNotFoundError:
     return b'File not found.\n'
   except:
