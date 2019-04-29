@@ -18,6 +18,7 @@ def server_thread(connection):
     return
   # Return the file given the filepath
   response = library.process_command(data, connection)
+
   # Send it back to the client through the connection
   connection.sendall(response)
   # Clean up the connection
@@ -26,7 +27,7 @@ def server_thread(connection):
 
 
 def main():
-  # Spin up the server
+    # Spin up the server
   s = library.create_server(library.SERVER_PORT)
   
   # Indefinitely process client requests
